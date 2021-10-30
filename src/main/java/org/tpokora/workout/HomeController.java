@@ -9,9 +9,9 @@ import java.util.Map;
 @RestController
 public class HomeController {
 
-    @RequestMapping("/hello")
+    @RequestMapping("/api/hello")
     public Map<String,Object> home() {
-        Map<String,Object> model = new HashMap<String,Object>();
+        Map<String,Object> model = new HashMap<>();
         model.put("content", "Hello World");
         return model;
     }
