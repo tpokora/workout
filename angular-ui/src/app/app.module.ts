@@ -7,12 +7,14 @@ import {HomeComponent} from './home/home.component';
 import {MaterialModule} from "./material.module";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { ExercisesListComponent } from './exercises/exercises-list/exercises-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    ExercisesListComponent,
   ],
   imports: [
     BrowserModule,
