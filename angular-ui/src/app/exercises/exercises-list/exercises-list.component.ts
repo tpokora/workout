@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Exercise} from "../shared/exercise.model";
+import {ExerciseService} from "../shared/exercise.service";
 
 @Component({
   selector: 'app-exercises-list',
@@ -8,18 +9,17 @@ import {Exercise} from "../shared/exercise.model";
 })
 export class ExercisesListComponent implements OnInit {
 
-  private MOCKED_LIST: Exercise[] = [
-    {name: "Rows"}, {name: "Deadlift"}
-  ];
+  private exerciseService: ExerciseService;
 
   exercisesList: Exercise[]
 
-  constructor() {
+  constructor(exerciseService: ExerciseService) {
+    this.exerciseService = exerciseService;
     this.exercisesList = [];
   }
 
   ngOnInit(): void {
-    this.exercisesList = this.MOCKED_LIST
+    this.exerciseService.getAll().subscribe(exercises => this.exercisesList = exercises)
   }
 
 }
