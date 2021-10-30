@@ -1,3 +1,14 @@
-<mat-list>
-  <mat-list-item *ngFor="let exercise of exercisesList"> {{exercise.name}} </mat-list-item>
-</mat-list>
+<div class="container">
+  <div class="content">
+    <mat-card class="card">
+      <mat-card-title>
+        <h2>Exercises</h2>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let exercise of exercisesList"> {{exercise.name}} </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
