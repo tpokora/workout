@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable, of} from "rxjs";
 import {Workout} from "./workout.model";
+import {RestService} from "../../core/rest.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class WorkoutService {
     {id: 2, name: "PPL"}
   ]
 
-  constructor() {
+  constructor(restService: RestService<Workout>) {
   }
 
   getAll(): Observable<Workout[]> {

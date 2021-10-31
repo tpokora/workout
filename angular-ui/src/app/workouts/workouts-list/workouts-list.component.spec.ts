@@ -4,6 +4,7 @@ import {WorkoutsListComponent} from './workouts-list.component';
 import {By} from "@angular/platform-browser";
 import {WorkoutService} from "../shared/workout.service";
 import {WorkoutServiceStubs} from "../../testing/workout-stubs";
+import {HttpClientModule} from "@angular/common/http";
 
 describe('WorkoutsListComponent', () => {
   let component: WorkoutsListComponent;
@@ -12,6 +13,7 @@ describe('WorkoutsListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [WorkoutsListComponent],
+      imports: [HttpClientModule],
       providers: [
         {provide: WorkoutService, useClass: WorkoutServiceStubs}
       ]
