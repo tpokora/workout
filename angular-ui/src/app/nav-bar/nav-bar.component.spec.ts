@@ -30,6 +30,12 @@ describe('NavBarComponent', () => {
     expect(homeBtn.nativeElement.innerHTML).toBe("Home");
   })
 
+  it('should have workouts button', () => {
+    const exercisesButton = fixture.debugElement.query(By.css('#workoutsBtn'));
+    expect(exercisesButton).toBeTruthy();
+    expect(exercisesButton.nativeElement.innerHTML).toBe("Workouts");
+  })
+
   it('should have exercises button', () => {
     const exercisesButton = fixture.debugElement.query(By.css('#exercisesBtn'));
     expect(exercisesButton).toBeTruthy();

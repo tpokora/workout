@@ -11,6 +11,8 @@ import {ExercisesListComponent} from './exercises/exercises-list/exercises-list.
 import {ExerciseService} from "./exercises/shared/exercise.service";
 import {RestService} from "./core/rest.service";
 import {HttpClientModule} from "@angular/common/http";
+import { WorkoutsListComponent } from './workouts/workouts-list/workouts-list.component';
+import {WorkoutService} from "./workouts/shared/workout.service";
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import {HttpClientModule} from "@angular/common/http";
     HomeComponent,
     NavBarComponent,
     ExercisesListComponent,
+    WorkoutsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,10 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [RestService, ExerciseService],
+  providers: [
+    RestService,
+    ExerciseService,
+    WorkoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

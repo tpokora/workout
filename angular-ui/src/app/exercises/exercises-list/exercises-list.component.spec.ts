@@ -33,6 +33,8 @@ describe('ExercisesListComponent', () => {
   }));
 
   it('should have exercise list', fakeAsync(() => {
+    const exerciseHeader = fixture.debugElement.queryAll(By.css('h2'));
+    expect(exerciseHeader[0].nativeElement.innerHTML).toBe("Exercises");
     const exercisesElements = fixture.debugElement.queryAll(By.css('mat-list-item'));
     expect(exercisesElements.length).toBe(2);
   }))
