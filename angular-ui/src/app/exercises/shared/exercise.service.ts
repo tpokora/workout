@@ -12,7 +12,7 @@ export class ExerciseService {
     {name: "Rows"}, {name: "Deadlift"}
   ];
 
-  constructor(private restService: RestService<Exercise>) {}
+  constructor(private restService: RestService) {}
 
   getAll(): Observable<Exercise[]> {
     return of(this.MOCKED_LIST);

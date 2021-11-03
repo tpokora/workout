@@ -1,6 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Observable, of} from "rxjs";
-import {Exercise} from "../exercises/shared/exercise.model";
 import {Workout} from "../workouts/shared/workout.model";
 
 const MOCKED_LIST: Workout[] = [
@@ -10,7 +8,7 @@ const MOCKED_LIST: Workout[] = [
 
 @Injectable()
 export class WorkoutServiceStubs {
-  getAll(): Observable<Exercise[]> {
-    return of(MOCKED_LIST);
+  getAll(): Workout[] {
+    return MOCKED_LIST;
   }
 }

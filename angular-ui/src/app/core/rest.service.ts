@@ -1,18 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
+import {throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RestService<T> {
+export class RestService {
 
-  private REST_API_SERVER = "http://localhost:8080/";
+  private REST_API_SERVER = "http://localhost:8080/api/";
 
   constructor(private httpClient: HttpClient) { }
 
-  public get(type: string, id?: number): Observable<Object> {
+  public get(type: string, id?: number) {
     let url = this.REST_API_SERVER + type;
     if (id) {
       url =  `${url}/${id}`;
@@ -21,7 +21,7 @@ export class RestService<T> {
   }
 
   handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Unknown error!';
+    let errorMessage;
     if (error.error instanceof ErrorEvent) {
       // Client-side errors
       errorMessage = `Error: ${error.error.message}`;

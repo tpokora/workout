@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Observable, of} from "rxjs";
 import {Workout} from "./workout.model";
 import {RestService} from "../../core/rest.service";
 
@@ -8,15 +7,21 @@ import {RestService} from "../../core/rest.service";
 })
 export class WorkoutService {
 
-  private MOCKED_LIST: Workout[] = [
-    {id: 1, name: "5x5"},
-    {id: 2, name: "PPL"}
-  ]
-
-  constructor(restService: RestService<Workout>) {
+  constructor(private restService: RestService) {
   }
 
-  getAll(): Observable<Workout[]> {
-    return of(this.MOCKED_LIST);
+  getAll(): Workout[] {
+    let workoutsList: any = [];
+    this.restService.get('workouts')
+      .subscribe(workouts => {
+        for (const workout of (workouts as Workout[])) {
+          console.log(workout)
+          workoutsList.push({
+            id: workout.id,
+            name: workout.name
+          });
+        }
+      });
+    return workoutsList;
   }
 }
