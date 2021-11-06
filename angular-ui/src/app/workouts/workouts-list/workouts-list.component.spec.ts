@@ -37,4 +37,10 @@ describe('WorkoutsListComponent', () => {
     const workoutsListElements = fixture.debugElement.queryAll(By.css('mat-list-item'));
     expect(workoutsListElements.length).toBe(2);
   }));
+
+  it('should have create workoutbutton', fakeAsync(() => {
+    const createWorkoutBtn = fixture.debugElement.query(By.css('#createWorkoutBtn'));
+    expect(createWorkoutBtn).toBeTruthy();
+    expect(createWorkoutBtn.nativeElement.innerHTML).toBe("+ Create Workout");
+  }));
 });

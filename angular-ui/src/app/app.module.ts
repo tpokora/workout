@@ -13,6 +13,7 @@ import {RestService} from "./core/rest.service";
 import {HttpClientModule} from "@angular/common/http";
 import { WorkoutsListComponent } from './workouts/workouts-list/workouts-list.component';
 import {WorkoutService} from "./workouts/shared/workout.service";
+import { WorkoutsAddComponent } from './workouts/workouts-add/workouts-add.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {WorkoutService} from "./workouts/shared/workout.service";
     NavBarComponent,
     ExercisesListComponent,
     WorkoutsListComponent,
+    WorkoutsAddComponent,
   ],
   imports: [
     BrowserModule,
