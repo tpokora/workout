@@ -38,7 +38,7 @@ describe('WorkoutsListComponent', () => {
     expect(workoutsListElements.length).toBe(2);
   }));
 
-  it('should have create workoutbutton', fakeAsync(() => {
+  it('should have create workout button', fakeAsync(() => {
     const createWorkoutBtn = fixture.debugElement.query(By.css('#createWorkoutBtn'));
     expect(createWorkoutBtn).toBeTruthy();
     expect(createWorkoutBtn.nativeElement.innerHTML).toBe("+ Create Workout");

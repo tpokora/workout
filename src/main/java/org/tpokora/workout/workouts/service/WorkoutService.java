@@ -1,6 +1,8 @@
-package org.tpokora.workout.workouts;
+package org.tpokora.workout.workouts.service;
 
 import org.springframework.stereotype.Service;
+import org.tpokora.workout.workouts.persistance.WorkoutRepository;
+import org.tpokora.workout.workouts.model.Workout;
 
 import java.util.List;
 

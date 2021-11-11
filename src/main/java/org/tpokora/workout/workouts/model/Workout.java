@@ -1,4 +1,4 @@
-package org.tpokora.workout.workouts;
+package org.tpokora.workout.workouts.model;
 
 public class Workout {
 

@@ -1,10 +1,12 @@
-package org.tpokora.workout.workouts;
+package org.tpokora.workout.workouts.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.tpokora.workout.workouts.model.Workout;
+import org.tpokora.workout.workouts.persistance.WorkoutRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,19 @@ class WorkoutServiceTest {
     @BeforeEach
     void setup() {
         workoutService = new WorkoutService(mockedWorkoutRepository);
+    }
+
+    @Test
+    void testRepositoryTestSave() {
+        // given
+        Workout workout = new Workout(null, "test workout");
+        WorkoutRepository workoutRepository = new WorkoutRepository();
+
+        // when
+        Workout savedWorkout = workoutRepository.save(workout);
+
+        // then
+        assertThat(savedWorkout.getId()).isNotNull();
     }
 
     @Test
