@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -72,6 +73,36 @@ class WorkoutsControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(testWorkout.getId())))
                 .andExpect(jsonPath("$.name", is(testWorkout.getName())));
+    }
+
+    @Test
+    void testGetWorkoutShouldReturnWorkoutWithStatusCode200() throws Exception {
+        // given
+        Workout workout = new Workout(1, "test workout 1");
+
+        when(workoutService.getWorkoutById(anyInt())).thenReturn(workout);
+
+        // then
+        this.mockMvc.perform(get("/api/workouts/1")
+                .with(testUserForRequest())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(workout.getId())))
+                .andExpect(jsonPath("$.name", is(workout.getName())));
+    }
+
+    @Test
+    void testGetWorkoutShouldReturnWithStatusCode404() throws Exception {
+        // given
+        Workout workout = new Workout(1, "test workout 1");
+
+        when(workoutService.getWorkoutById(anyInt())).thenThrow(new IllegalArgumentException("Could not find Workout with id: " + workout.getId()));
+
+        // then
+        this.mockMvc.perform(get("/api/workouts/1")
+                .with(testUserForRequest())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     private static SecurityMockMvcRequestPostProcessors.UserRequestPostProcessor testUserForRequest() {

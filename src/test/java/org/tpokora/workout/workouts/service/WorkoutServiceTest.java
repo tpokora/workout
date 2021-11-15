@@ -10,8 +10,11 @@ import org.tpokora.workout.workouts.persistance.WorkoutRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -69,5 +72,41 @@ class WorkoutServiceTest {
 
         // expect
         assertThat(workoutService.getAllWorkouts().size()).isEqualTo(3);
+    }
+
+    @Test
+    void getWorkoutByIdShouldReturnWorkoutWhenExistInPersistance() {
+        // given
+        WorkoutService workoutService = new WorkoutService(new WorkoutRepository());
+
+        // when
+        Workout workoutById = workoutService.getWorkoutById(1);
+
+        assertThat(workoutById.getId()).isEqualTo(1);
+        assertThat(workoutById.getName()).isEqualTo("PPL");
+    }
+
+    @Test
+    void getWorkoutByIdShouldReturnWorkoutWhenExist() {
+        // given
+        Workout workout = new Workout(1, "test workout");
+        when(mockedWorkoutRepository.findWorkoutById(anyInt())).thenReturn(Optional.of(workout));
+
+        // when
+        Workout workoutById = workoutService.getWorkoutById(1);
+
+        assertThat(workoutById.getId()).isEqualTo(workout.getId());
+        assertThat(workoutById.getName()).isEqualTo(workout.getName());
+    }
+
+    @Test
+    void getWorkoutByIdShouldThrowNotFoundException() {
+        // given
+        when(mockedWorkoutRepository.findWorkoutById(anyInt())).thenReturn(Optional.empty());
+
+        // expect
+        assertThatThrownBy(() -> workoutService.getWorkoutById(1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Could not find Workout with id: " + 1);
     }
 }

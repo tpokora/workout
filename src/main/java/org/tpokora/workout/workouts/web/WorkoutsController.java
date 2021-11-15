@@ -31,5 +31,11 @@ public class WorkoutsController {
         return new ResponseEntity<>(savedWorkout, HttpStatus.CREATED);
     }
 
+    @CrossOrigin
+    @GetMapping(value = "/workouts/{id}", produces = "application/json")
+    public ResponseEntity<Workout> getWorkout(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(workoutService.getWorkoutById(id), HttpStatus.OK);
+    }
+
 
 }
