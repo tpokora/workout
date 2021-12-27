@@ -20,4 +20,15 @@ class TestExerciseViewSet(TestCase):
         response = client.get(f'/workouts/exercises/')
 
         self.assertEqual(response.status_code, 200)
-        # TODO: check response content
+
+        results = response.data['results']
+        self.assertEqual(len(results), 2)
+        results_first_exercise = response.data['results'][0]
+        results_second_exercise = response.data['results'][1]
+
+        self.assertResultExercise(self.first_exercise, results_first_exercise)
+        self.assertResultExercise(self.second_exercise, results_second_exercise)
+
+    def assertResultExercise(self, exercise, result_exercise):
+        self.assertEqual(exercise.name, result_exercise['name'])
+        self.assertEqual(exercise.description, result_exercise['description'])
