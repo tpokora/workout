@@ -3,14 +3,13 @@ from django.shortcuts import render
 
 # Create your pages here.
 from django.template import loader
+from django.views import generic
 
 from workouts.models import Exercise
 
+class ExercisesListPageView(generic.ListView):
+    template_name = "workouts/exercises.html"
+    context_object_name = "exercises_list"
 
-def exercises(request):
-    exercises_list = Exercise.objects.all()
-    template = loader.get_template("workouts/exercises.html")
-    context = {
-        'exercises_list': exercises_list
-    }
-    return HttpResponse(template.render(context, request))
+    def get_queryset(self):
+        return Exercise.objects.all()
