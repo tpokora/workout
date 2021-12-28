@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-# Create your views here.
+# Create your pages here.
 from workouts.models import Exercise
 from api.serializers import ExerciseSerializer
 
