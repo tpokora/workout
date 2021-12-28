@@ -1,0 +1,10 @@
+{% if exercises_list %}
+    <h2>Exercises</h2>
+    <ul>
+    {% for exercise in exercises_list %}
+        <li>{{ exercise.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Exercises</p>
+{% endif %}

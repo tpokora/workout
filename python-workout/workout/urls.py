@@ -26,5 +26,5 @@ api_router.register(r'workouts/exercises', api_views.ExerciseViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(api_router.urls)),
-    path('pages/', pages_views.index, name='index')
+    path('pages/workouts/exercises', pages_views.exercises, name='exercises')
 ]

@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # my apps
-    'workouts'
+    'workouts',
+    'api',
+    'pages'
 ]
 
 MIDDLEWARE = [
