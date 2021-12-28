@@ -17,7 +17,7 @@ class TestExerciseViewSet(TestCase):
 
     def test_get_request(self):
         client = APIClient()
-        response = client.get(f'/workouts/exercises/')
+        response = client.get(f'/api/workouts/exercises/')
 
         self.assertEqual(response.status_code, 200)
 

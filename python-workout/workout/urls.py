@@ -19,10 +19,10 @@ from rest_framework import routers
 
 from api import views
 
-router = routers.DefaultRouter()
-router.register(r'workouts/exercises', views.ExerciseViewSet)
+api_router = routers.DefaultRouter()
+api_router.register(r'workouts/exercises', views.ExerciseViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('api/', include(api_router.urls))
 ]
