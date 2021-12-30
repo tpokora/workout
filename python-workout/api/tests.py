@@ -38,13 +38,35 @@ class WorkoutDetailAPIView(TestCase):
     def setUp(self) -> None:
         self.squat = Exercise(name="Squat", description="Description")
         self.squat.save()
+        self.bench = Exercise(name="Bench", description="Description")
+        self.bench.save()
+        self.row = Exercise(name="Rows", description="Description")
+        self.row.save()
+        self.ohp = Exercise(name="OHP", description="Description")
+        self.ohp.save()
+        self.deadlift = Exercise(name="Deadlift", description="Description")
+        self.deadlift.save()
 
         self.workout = Workout(name="Workout")
         self.workout.save()
+
         self.workout_section_a = WorkoutSection(name="A", workout=self.workout)
         self.workout_section_a.save()
         self.exercise_set1_a = ExerciseSet(sets=5, reps=5, exercise=self.squat, workout_section=self.workout_section_a)
         self.exercise_set1_a.save()
+        self.exercise_set2_a = ExerciseSet(sets=5, reps=5, exercise=self.bench, workout_section=self.workout_section_a)
+        self.exercise_set2_a.save()
+        self.exercise_set3_a = ExerciseSet(sets=5, reps=5, exercise=self.row, workout_section=self.workout_section_a)
+        self.exercise_set3_a.save()
+
+        self.workout_section_b = WorkoutSection(name="B", workout=self.workout)
+        self.workout_section_b.save()
+        self.exercise_set1_b = ExerciseSet(sets=5, reps=5, exercise=self.squat, workout_section=self.workout_section_b)
+        self.exercise_set1_b.save()
+        self.exercise_set2_b = ExerciseSet(sets=5, reps=5, exercise=self.ohp, workout_section=self.workout_section_b)
+        self.exercise_set2_b.save()
+        self.exercise_set3_b = ExerciseSet(sets=5, reps=5, exercise=self.deadlift, workout_section=self.workout_section_b)
+        self.exercise_set3_b.save()
 
     def test_get(self):
         client = APIClient()
@@ -62,6 +84,45 @@ class WorkoutDetailAPIView(TestCase):
                                                  'id': 1,
                                                  'name': 'Squat',
                                                  'description': 'Description'
+                                             }},
+                                            {'sets': 5,
+                                             'reps': 5,
+                                             'exercise': {
+                                                 'id': 2,
+                                                 'name': 'Bench',
+                                                 'description': 'Description'
+                                             }},
+                                            {'sets': 5,
+                                             'reps': 5,
+                                             'exercise': {
+                                                 'id': 3,
+                                                 'name': 'Rows',
+                                                 'description': 'Description'
                                              }}
-                                        ]}]}
+                                        ]},
+                                       {'name': 'B',
+                                        'exercise_sets': [
+                                            {'sets': 5,
+                                             'reps': 5,
+                                             'exercise': {
+                                                 'id': 1,
+                                                 'name': 'Squat',
+                                                 'description': 'Description'
+                                             }},
+                                            {'sets': 5,
+                                             'reps': 5,
+                                             'exercise': {
+                                                 'id': 4,
+                                                 'name': 'OHP',
+                                                 'description': 'Description'
+                                             }},
+                                            {'sets': 5,
+                                             'reps': 5,
+                                             'exercise': {
+                                                 'id': 5,
+                                                 'name': 'Deadlift',
+                                                 'description': 'Description'
+                                             }}
+                                        ]}
+                                       ]}
         self.assertEqual(response.data, expected_json_response)
