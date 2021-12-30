@@ -51,7 +51,17 @@ class WorkoutDetailAPIView(TestCase):
         response = client.get(f'/api/workouts/{self.workout.pk}/')
 
         self.assertEqual(response.status_code, 200)
-        expected_json_response = {'name': 'Workout',
+        expected_json_response = {'id': 1,
+                                  'name': 'Workout',
                                   'workout_sections':
-                                      [{'name': 'A'}]}
+                                      [{'name': 'A',
+                                        'exercise_sets': [
+                                            {'sets': 5,
+                                             'reps': 5,
+                                             'exercise': {
+                                                 'id': 1,
+                                                 'name': 'Squat',
+                                                 'description': 'Description'
+                                             }}
+                                        ]}]}
         self.assertEqual(response.data, expected_json_response)
