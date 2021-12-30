@@ -1,11 +1,8 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-
 # Create your pages here.
-from django.template import loader
 from django.views import generic
 
 from workouts.models import Exercise
+
 
 class ExercisesListPageView(generic.ListView):
     template_name = "workouts/exercises.html"
