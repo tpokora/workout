@@ -47,9 +47,40 @@ class WorkoutDetailAPIView(TestCase):
         self.deadlift = Exercise(name="Deadlift", description="Description")
         self.deadlift.save()
 
-        self.workout = Workout(name="Workout")
+        self.workout = Workout(name='Workout')
         self.workout.save()
 
+    def test_get_empty_workout(self):
+        client = APIClient()
+        response = client.get(f'/api/workouts/{self.workout.pk}/')
+
+        self.assertEqual(response.status_code, 200)
+        expected_json_response = {'id': 1,
+                                  'name': 'Workout',
+                                  'workout_sections': []}
+
+        self.assertEqual(response.data, expected_json_response)
+
+    def test_get_workout_with_empty_workout_sections(self):
+        self.workout_section_a = WorkoutSection(name="A", workout=self.workout)
+        self.workout_section_a.save()
+        self.workout_section_b = WorkoutSection(name="B", workout=self.workout)
+        self.workout_section_b.save()
+
+        client = APIClient()
+        response = client.get(f'/api/workouts/{self.workout.pk}/')
+
+        self.assertEqual(response.status_code, 200)
+        expected_json_response = {'id': 1,
+                                  'name': 'Workout',
+                                  'workout_sections': [
+                                      {'name': 'A', 'exercise_sets': []},
+                                      {'name': 'B', 'exercise_sets': []}
+                                  ]}
+
+        self.assertEqual(response.data, expected_json_response)
+
+    def test_get_full_workout(self):
         self.workout_section_a = WorkoutSection(name="A", workout=self.workout)
         self.workout_section_a.save()
         self.exercise_set1_a = ExerciseSet(sets=5, reps=5, exercise=self.squat, workout_section=self.workout_section_a)
@@ -65,10 +96,10 @@ class WorkoutDetailAPIView(TestCase):
         self.exercise_set1_b.save()
         self.exercise_set2_b = ExerciseSet(sets=5, reps=5, exercise=self.ohp, workout_section=self.workout_section_b)
         self.exercise_set2_b.save()
-        self.exercise_set3_b = ExerciseSet(sets=5, reps=5, exercise=self.deadlift, workout_section=self.workout_section_b)
+        self.exercise_set3_b = ExerciseSet(sets=5, reps=5, exercise=self.deadlift,
+                                           workout_section=self.workout_section_b)
         self.exercise_set3_b.save()
 
-    def test_get(self):
         client = APIClient()
         response = client.get(f'/api/workouts/{self.workout.pk}/')
 
