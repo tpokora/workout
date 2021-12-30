@@ -26,7 +26,7 @@ class Workout(models.Model):
 
 class WorkoutSection(models.Model):
     name = models.CharField(max_length=50)
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='workout_sections')
 
     def __str__(self):
         return f"{{name: '{self.name}'}}"
@@ -39,7 +39,8 @@ class ExerciseSet(models.Model):
     sets = models.IntegerField()
     reps = models.IntegerField()
     exercise = models.ForeignKey(Exercise, on_delete=models.DO_NOTHING)
-    workout_section = models.ForeignKey(WorkoutSection, on_delete=models.CASCADE, default=None)
+    workout_section = models.ForeignKey(WorkoutSection, on_delete=models.CASCADE, default=None,
+                                        related_name='exercise_sets')
 
     def __str__(self):
         return f"{{sets: {self.sets}, reps: {self.reps}, exercise: {self.exercise.__str__()}}}"

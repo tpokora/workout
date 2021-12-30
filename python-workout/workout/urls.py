@@ -21,8 +21,12 @@ from pages import views as pages_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/workouts/', api_views.WorkoutView.as_view(), name='workouts'),
-    path('api/workouts/<int:pk>/', api_views.WorkoutDetailView.as_view(), name='workout_details'),
-    path('api/workouts/exercises/', api_views.ExerciseView.as_view(), name='exercises'),
+
+    # Workout API
+    path('api/workouts/', api_views.WorkoutAPIView.as_view(), name='workouts'),
+    path('api/workouts/<int:pk>/', api_views.WorkoutDetailAPIView.as_view(), name='workout_details'),
+
+    # Exercise API
+    path('api/workouts/exercises/', api_views.ExerciseAPIView.as_view(), name='exercises'),
     path('pages/workouts/exercises/', pages_views.ExercisesListPageView.as_view(), name='exercises')
 ]

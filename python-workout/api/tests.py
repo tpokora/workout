@@ -1,13 +1,13 @@
 from django.test import TestCase
 from rest_framework.test import (
-    force_authenticate, APIRequestFactory, APIClient
+    APIClient
 )
 
 # Create your tests here.
-from workouts.models import Exercise
+from workouts.models import Exercise, Workout, WorkoutSection, ExerciseSet
 
 
-class TestExerciseViewSet(TestCase):
+class TestExerciseAPIView(TestCase):
     def setUp(self) -> None:
         # Create Exercise
         self.first_exercise = \
@@ -32,3 +32,26 @@ class TestExerciseViewSet(TestCase):
     def assertResultExercise(self, exercise, result_exercise):
         self.assertEqual(exercise.name, result_exercise['name'])
         self.assertEqual(exercise.description, result_exercise['description'])
+
+
+class WorkoutDetailAPIView(TestCase):
+    def setUp(self) -> None:
+        self.squat = Exercise(name="Squat", description="Description")
+        self.squat.save()
+
+        self.workout = Workout(name="Workout")
+        self.workout.save()
+        self.workout_section_a = WorkoutSection(name="A", workout=self.workout)
+        self.workout_section_a.save()
+        self.exercise_set1_a = ExerciseSet(sets=5, reps=5, exercise=self.squat, workout_section=self.workout_section_a)
+        self.exercise_set1_a.save()
+
+    def test_get(self):
+        client = APIClient()
+        response = client.get(f'/api/workouts/{self.workout.pk}/')
+
+        self.assertEqual(response.status_code, 200)
+        expected_json_response = {'name': 'Workout',
+                                  'workout_sections':
+                                      [{'name': 'A'}]}
+        self.assertEqual(response.data, expected_json_response)

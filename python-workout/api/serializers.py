@@ -11,22 +11,21 @@ class WorkoutSerializer(serializers.ModelSerializer):
 class WorkoutSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkoutSection
-        fields = ['name', 'workout']
+        fields = ['name']
 
-    def to_representation(self, instance):
-        self.fields['workout'] = WorkoutSerializer(read_only=True)
-        return super(WorkoutSectionSerializer, self).to_representation(instance)
+
+class WorkoutDetailSerializer(serializers.ModelSerializer):
+    workout_sections = WorkoutSectionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Workout
+        fields = ['name', 'workout_sections']
 
 
 class ExerciseSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseSet
-        fields = ['sets', 'reps', 'exercise', 'workout_section']
-
-    def to_representation(self, instance):
-        self.fields['exercise'] = ExerciseSerializer(read_only=True)
-        self.fields['workout_section'] = WorkoutSectionSerializer(read_only=True)
-        return super(ExerciseSetSerializer, self).to_representation(instance)
+        fields = ['sets', 'reps', 'exercise']
 
 
 class ExerciseSerializer(serializers.ModelSerializer):

@@ -33,7 +33,7 @@ class WorkoutTest(TestCase):
         workout_section_a.save()
         workout_section_b = WorkoutSection(name="B", workout=workout)
         workout_section_b.save()
-        self.assertEqual(workout.workoutsection_set.count(), 2)
+        self.assertEqual(workout.workout_sections.count(), 2)
 
         exercise_set1_a = ExerciseSet(sets=5, reps=5, exercise=self.squat, workout_section=workout_section_a)
         exercise_set1_a.save()
@@ -50,8 +50,8 @@ class WorkoutTest(TestCase):
         exercise_set3_b.save()
 
         # then
-        self.assertEqual(workout_section_a.exerciseset_set.count(), 3)
-        self.assertEqual(workout_section_b.exerciseset_set.count(), 3)
+        self.assertEqual(workout_section_a.exercise_sets.count(), 3)
+        self.assertEqual(workout_section_b.exercise_sets.count(), 3)
 
     def test_model_delete(self):
         # should delete workout, workout_sections, exercise_sets
@@ -64,7 +64,7 @@ class WorkoutTest(TestCase):
         workout_section_a.save()
         workout_section_b = WorkoutSection(name="B", workout=workout)
         workout_section_b.save()
-        self.assertEqual(workout.workoutsection_set.count(), 2)
+        self.assertEqual(workout.workout_sections.count(), 2)
 
         exercise_set1_a = ExerciseSet(sets=5, reps=5, exercise=self.squat, workout_section=workout_section_a)
         exercise_set1_a.save()
@@ -80,8 +80,8 @@ class WorkoutTest(TestCase):
         exercise_set3_b = ExerciseSet(sets=5, reps=5, exercise=self.deadlift, workout_section=workout_section_b)
         exercise_set3_b.save()
 
-        self.assertEqual(workout_section_a.exerciseset_set.count(), 3)
-        self.assertEqual(workout_section_b.exerciseset_set.count(), 3)
+        self.assertEqual(workout_section_a.exercise_sets.count(), 3)
+        self.assertEqual(workout_section_b.exercise_sets.count(), 3)
 
         # then
         workout.delete()
