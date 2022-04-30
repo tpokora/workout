@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.tpokora.workout.workouts.model.Workout;
-import org.tpokora.workout.workouts.persistance.WorkoutRepository;
+import org.tpokora.workout.workouts.persistance.WorkoutRepositoryInMemory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +21,23 @@ import static org.mockito.Mockito.when;
 class WorkoutServiceTest {
 
     @MockBean
-    private WorkoutRepository mockedWorkoutRepository;
+    private WorkoutRepositoryInMemory mockedWorkoutRepositoryInMemory;
 
     private WorkoutService workoutService;
 
     @BeforeEach
     void setup() {
-        workoutService = new WorkoutService(mockedWorkoutRepository);
+        workoutService = new WorkoutService(mockedWorkoutRepositoryInMemory);
     }
 
     @Test
     void testRepositoryTestSave() {
         // given
         Workout workout = new Workout(null, "test workout");
-        WorkoutRepository workoutRepository = new WorkoutRepository();
+        WorkoutRepositoryInMemory workoutRepositoryInMemory = new WorkoutRepositoryInMemory();
 
         // when
-        Workout savedWorkout = workoutRepository.save(workout);
+        Workout savedWorkout = workoutRepositoryInMemory.save(workout);
 
         // then
         assertThat(savedWorkout.getId()).isNotNull();
@@ -62,7 +62,7 @@ class WorkoutServiceTest {
     @Test
     void getSaveShouldPersistWorkout() {
         // given
-        WorkoutService workoutService = new WorkoutService(new WorkoutRepository());
+        WorkoutService workoutService = new WorkoutService(new WorkoutRepositoryInMemory());
         Workout newWorkout = new Workout(10, "newWorkout");
         int originalWorkoutsAmount = workoutService.getAllWorkouts().size();
         assertThat(originalWorkoutsAmount).isEqualTo(2);
@@ -77,7 +77,7 @@ class WorkoutServiceTest {
     @Test
     void getWorkoutByIdShouldReturnWorkoutWhenExistInPersistance() {
         // given
-        WorkoutService workoutService = new WorkoutService(new WorkoutRepository());
+        WorkoutService workoutService = new WorkoutService(new WorkoutRepositoryInMemory());
 
         // when
         Workout workoutById = workoutService.getWorkoutById(1);
@@ -90,7 +90,7 @@ class WorkoutServiceTest {
     void getWorkoutByIdShouldReturnWorkoutWhenExist() {
         // given
         Workout workout = new Workout(1, "test workout");
-        when(mockedWorkoutRepository.findWorkoutById(anyInt())).thenReturn(Optional.of(workout));
+        when(mockedWorkoutRepositoryInMemory.findWorkoutById(anyInt())).thenReturn(Optional.of(workout));
 
         // when
         Workout workoutById = workoutService.getWorkoutById(1);
@@ -102,7 +102,7 @@ class WorkoutServiceTest {
     @Test
     void getWorkoutByIdShouldThrowNotFoundException() {
         // given
-        when(mockedWorkoutRepository.findWorkoutById(anyInt())).thenReturn(Optional.empty());
+        when(mockedWorkoutRepositoryInMemory.findWorkoutById(anyInt())).thenReturn(Optional.empty());
 
         // expect
         assertThatThrownBy(() -> workoutService.getWorkoutById(1))

@@ -2,29 +2,29 @@ package org.tpokora.workout.workouts.service;
 
 import org.springframework.stereotype.Service;
 import org.tpokora.workout.workouts.model.Workout;
-import org.tpokora.workout.workouts.persistance.WorkoutRepository;
+import org.tpokora.workout.workouts.persistance.WorkoutRepositoryInMemory;
 
 import java.util.List;
 
 @Service
 public class WorkoutService {
 
-    private WorkoutRepository workoutRepository;
+    private WorkoutRepositoryInMemory workoutRepositoryInMemory;
 
-    public WorkoutService(WorkoutRepository workoutRepository) {
-        this.workoutRepository = workoutRepository;
+    public WorkoutService(WorkoutRepositoryInMemory workoutRepositoryInMemory) {
+        this.workoutRepositoryInMemory = workoutRepositoryInMemory;
     }
 
     public Workout getWorkoutById(Integer id) {
-        return workoutRepository.findWorkoutById(id)
+        return workoutRepositoryInMemory.findWorkoutById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Could not find Workout with id: " + id));
     }
 
     public List<Workout> getAllWorkouts() {
-        return workoutRepository.getAllWorkouts();
+        return workoutRepositoryInMemory.getAllWorkouts();
     }
 
     public Workout save(Workout workout) {
-        return workoutRepository.save(workout);
+        return workoutRepositoryInMemory.save(workout);
     }
 }
