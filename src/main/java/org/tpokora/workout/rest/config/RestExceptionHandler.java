@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.tpokora.workout.rest.exception.RestApiException;
 import org.tpokora.workout.rest.exception.RestApiRequestException;
+import org.tpokora.workout.workouts.exceptions.ItemNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 ex, apiError, headers, apiError.getStatus(), request);
     }
 
-    @ExceptionHandler({ IllegalArgumentException.class })
+    @ExceptionHandler({ ItemNotFoundException.class })
     public ResponseEntity<Object> handleConstraintViolation(
-            IllegalArgumentException ex, WebRequest request) {
+            ItemNotFoundException ex, WebRequest request) {
         String error = ex.getClass().getName() + ": " + ex.getMessage();
 
         RestApiRequestException restApiRequestException =
