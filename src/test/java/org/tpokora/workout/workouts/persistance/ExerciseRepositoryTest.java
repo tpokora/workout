@@ -8,11 +8,11 @@ import org.tpokora.workout.workouts.model.Exercise;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 class ExerciseRepositoryTest {
 
-    private ExerciseRepository exerciseRepository = new ExerciseRepository();
+    private final ExerciseRepository exerciseRepository = new ExerciseRepository();
 
     @Test
     void saveShouldSaveExercise() {
@@ -24,7 +24,7 @@ class ExerciseRepositoryTest {
         Exercise savedExercise = exerciseRepository.save(exerciseToSave);
 
         // then
-        Assertions.assertEquals(exerciseToSave.hashCode(), savedExercise.hashCode());
+        assertThat(exerciseToSave).hasSameHashCodeAs(savedExercise);
     }
 
     @Test
@@ -34,7 +34,7 @@ class ExerciseRepositoryTest {
         exerciseRepository.save(exerciseToSave);
 
         // expect
-        Assertions.assertThrows(ItemAlreadyExistsException.class, () -> exerciseRepository.save(exerciseToSave));
+        assertThatThrownBy(() -> exerciseRepository.save(exerciseToSave)).isInstanceOf(ItemAlreadyExistsException.class);
     }
 
     @Test
@@ -49,7 +49,7 @@ class ExerciseRepositoryTest {
         List<Exercise> exerciseList = exerciseRepository.getAll();
 
         // then
-        Assertions.assertEquals(2, exerciseList.size());
+        assertThat(exerciseList.size()).isEqualTo(2);
     }
 
     @Test
@@ -64,13 +64,13 @@ class ExerciseRepositoryTest {
         Exercise exerciseByName = exerciseRepository.getByName("Squat");
 
         // then
-        Assertions.assertEquals(exerciseToSave1, exerciseByName);
+        assertThat(exerciseToSave1).isEqualTo(exerciseByName);
     }
 
     @Test
     void getByNameShouldThrowItemNotFoundExceptionWhenExerciseIsNotFound() {
         // expect
-        Assertions.assertThrows(ItemNotFoundException.class, () -> exerciseRepository.getByName("Squat"));
+        assertThatThrownBy(() -> exerciseRepository.getByName("Squat")).isInstanceOf(ItemNotFoundException.class);
     }
 
     @Test
@@ -84,7 +84,7 @@ class ExerciseRepositoryTest {
         exerciseRepository.delete(savedExercise.getName());
 
         // expect
-        Assertions.assertThrows(ItemNotFoundException.class, () -> exerciseRepository.getByName("Squat"));
+        assertThatThrownBy(() -> exerciseRepository.getByName("Squat")).isInstanceOf(ItemNotFoundException.class);
     }
 
     @Test
@@ -93,7 +93,7 @@ class ExerciseRepositoryTest {
         Assertions.assertEquals(0, exerciseRepository.getAll().size());
 
         // expect
-        Assertions.assertThrows(ItemNotFoundException.class, () -> exerciseRepository.delete("Squat"));
+        assertThatThrownBy(() -> exerciseRepository.delete("Squat")).isInstanceOf(ItemNotFoundException.class);
     }
 
     @Test
@@ -107,7 +107,7 @@ class ExerciseRepositoryTest {
         Exercise updatedExercise = exerciseRepository.update(exerciseToSave.getName(), changedExercise);
 
         // then
-        Assertions.assertEquals(changedExercise, updatedExercise);
+        assertThat(changedExercise).isEqualTo(updatedExercise);
     }
 
     @Test
@@ -116,7 +116,7 @@ class ExerciseRepositoryTest {
         Exercise changedExercise = createExercise("Front Squat", 3, 10);
 
         // expect
-        Assertions.assertThrows(ItemNotFoundException.class, () -> exerciseRepository.update("NotExistingExercise", changedExercise));
+        assertThatThrownBy(() -> exerciseRepository.update("NotExistingExercise", changedExercise)).isInstanceOf(ItemNotFoundException.class);
     }
 
     @Test
@@ -129,7 +129,7 @@ class ExerciseRepositoryTest {
         Exercise changedExercise = createExercise("Squat", 3, 10);
 
         // expect
-        Assertions.assertThrows(ItemAlreadyExistsException.class, () -> exerciseRepository.update("Front Squat", changedExercise));
+        assertThatThrownBy(() -> exerciseRepository.update("Front Squat", changedExercise)).isInstanceOf(ItemAlreadyExistsException.class);
     }
 
 
