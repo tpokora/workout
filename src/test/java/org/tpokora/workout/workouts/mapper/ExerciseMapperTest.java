@@ -16,8 +16,7 @@ class ExerciseMapperTest {
     @Test
     void toEntityShouldHaveEqualFieldsAsDto() {
         // given
-        ExerciseDto exerciseDto = ExerciseDto.builder()
-                .name(NAME)
+        ExerciseDto exerciseDto = ExerciseDto.builder(NAME)
                 .description(DESCRIPTION)
                 .build();
 

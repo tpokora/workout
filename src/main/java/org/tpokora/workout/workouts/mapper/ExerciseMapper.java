@@ -9,9 +9,12 @@ public class ExerciseMapper {
         return new ExerciseEntity(null, exerciseDto.getName(), exerciseDto.getDescription());
     }
 
+    public ExerciseEntity toEntity(ExerciseDto exerciseDto, Long id) {
+        return new ExerciseEntity(id, exerciseDto.getName(), exerciseDto.getDescription());
+    }
+
     public ExerciseDto toDto(ExerciseEntity exerciseEntity) {
-        return ExerciseDto.builder()
-                .name(exerciseEntity.getName())
+        return ExerciseDto.builder(exerciseEntity.getName())
                 .description(exerciseEntity.getDescription())
                 .build();
     }

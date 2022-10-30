@@ -114,8 +114,7 @@ class ExerciseControllerTest {
     }
 
     private ExerciseDto createExercise(String name, String description) {
-        return ExerciseDto.builder()
-                .name(name)
+        return ExerciseDto.builder(name)
                 .description(description)
                 .build();
     }

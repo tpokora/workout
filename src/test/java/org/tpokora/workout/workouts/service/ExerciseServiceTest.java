@@ -63,7 +63,7 @@ class ExerciseServiceTest {
         List<ExerciseDto> exerciseList = exerciseService.getAll();
 
         // then
-        assertThat(exerciseList.size()).isEqualTo(2);
+        assertThat(exerciseList).hasSize(2);
     }
 
     @Test
@@ -104,7 +104,7 @@ class ExerciseServiceTest {
     @Test
     void deleteShouldThrowExceptionWhenItemToDeleteNotExists() {
         // given
-        assertThat(exerciseService.getAll().size()).isZero();
+        assertThat(exerciseService.getAll()).isEmpty();
 
         // expect
         assertThatThrownBy(() -> exerciseService.delete("Squat")).isInstanceOf(ItemNotFoundException.class);
@@ -150,8 +150,7 @@ class ExerciseServiceTest {
     }
 
     private ExerciseDto createExerciseDto(String name, String description) {
-        return ExerciseDto.builder()
-                .name(name)
+        return ExerciseDto.builder(name)
                 .description(description)
                 .build();
     }

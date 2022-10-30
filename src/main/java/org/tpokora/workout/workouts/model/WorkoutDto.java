@@ -4,15 +4,15 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
-@Builder
+@Builder(builderMethodName = "hiddenBuilder")
 @Value
-public class ExerciseDto {
+public class WorkoutDto {
 
     @NonNull
     String name;
     String description;
 
-    public static ExerciseDtoBuilder builder(String name) {
-        return new ExerciseDtoBuilder().name(name);
+    public static WorkoutDtoBuilder builder(String name) {
+        return new WorkoutDtoBuilder().name(name);
     }
 }

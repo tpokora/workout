@@ -30,7 +30,7 @@ public class ExerciseService {
     }
 
     public ExerciseDto getByName(String name) {
-        return entityToDto(returnExerciseEntityByNameOrThrowException(name));
+        return findExerciseByName(name);
     }
 
     public ExerciseDto save(ExerciseDto exerciseToSave) {
@@ -40,17 +40,18 @@ public class ExerciseService {
 
     @Transactional
     public void delete(String name) {
-        returnExerciseEntityByNameOrThrowException(name);
+        findExerciseByName(name);
         exerciseRepository.deleteByName(name);
     }
 
     @Transactional
     public ExerciseDto update(ExerciseDto oldExercise, ExerciseDto changedExercise) {
         checkIfExerciseAlreadyExists(changedExercise);
-        ExerciseEntity oldExerciseEntity = returnExerciseEntityByNameOrThrowException(oldExercise.getName());
-        oldExerciseEntity.setName(changedExercise.getName());
-        oldExerciseEntity.setDescription(changedExercise.getDescription());
-        return entityToDto(exerciseRepository.save(oldExerciseEntity));
+        return entityToDto(
+                exerciseRepository.save(
+                        EXERCISE_MAPPER.toEntity(
+                                changedExercise,
+                                findExerciseIdByName(oldExercise.getName()))));
     }
 
     private void checkIfExerciseAlreadyExists(ExerciseDto exerciseDto) {
@@ -59,10 +60,18 @@ public class ExerciseService {
         });
     }
 
-    private ExerciseEntity returnExerciseEntityByNameOrThrowException(String name) {
+    private ExerciseDto findExerciseByName(String name) {
         return exerciseRepository.findByName(name)
+                .map(EXERCISE_MAPPER::toDto)
                 .orElseThrow(ItemNotFoundException::new);
     }
+
+    private Long findExerciseIdByName(String name) {
+        return exerciseRepository.findByName(name)
+                .map(ExerciseEntity::getId)
+                .orElseThrow(ItemNotFoundException::new);
+    }
+
 
     private ExerciseDto entityToDto(ExerciseEntity exerciseEntity) {
         return EXERCISE_MAPPER.toDto(exerciseEntity);
@@ -72,3 +81,4 @@ public class ExerciseService {
         return EXERCISE_MAPPER.toEntity(exerciseDto);
     }
 }
+

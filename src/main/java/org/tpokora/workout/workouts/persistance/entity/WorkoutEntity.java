@@ -1,6 +1,9 @@
 package org.tpokora.workout.workouts.persistance.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -9,10 +12,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = ExerciseEntity.EXERCISE)
-public class ExerciseEntity {
+@Table(name = WorkoutEntity.WORKOUT)
+public class WorkoutEntity {
 
-    public static final String EXERCISE = "exercise";
+    public static final String WORKOUT = "workout";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
